@@ -5,6 +5,8 @@
 # Exit immediately if a simple command exits with a non-zero status.
 set -e
 
+echo "$BLUEMIX_USER"
+
 echo "Installing ruby packages..."
 gem install jekyll bundler jekyll-feed jekyll-asciidoc coderay uglifier octopress-minify-html
 gem install jekyll-assets -v 2.4.0
