@@ -12,7 +12,7 @@ script: ./scripts/build_jekyll_maven.sh
 # branch whitelist
 branches:
   only:
-    - development
+    - haDeployment
 
 sudo: false # route your build to the container-based infrastructure for a faster build
 
@@ -24,8 +24,6 @@ deploy:
   password: $BLUEMIX_PASSWORD
   organization: $BLUEMIX_ORGANIZATION
   space: $BLUEMIX_SPACE
-  on:
-    branch: development
 
 env:
   global:
