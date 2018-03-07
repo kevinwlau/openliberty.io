@@ -4,10 +4,7 @@ disk_quota: 1024M
 path: target/openliberty.war
 
 applications:
-- name: qa-guides-blue
-  domain: mybluemix.net
-  host: sguides
-- name: qa-guides-green
+- name: sguides
   domain: mybluemix.net
   host: sguides
 env:

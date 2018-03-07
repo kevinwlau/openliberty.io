@@ -17,13 +17,15 @@ branches:
 sudo: false # route your build to the container-based infrastructure for a faster build
 
 deploy:
-  provider: bluemixcloudfoundry
-  skip_cleanup: true
-  manifest: manifest.yml
-  username: $BLUEMIX_USER
-  password: $BLUEMIX_PASSWORD
-  organization: $BLUEMIX_ORGANIZATION
-  space: $BLUEMIX_SPACE
+  # provider: bluemixcloudfoundry
+  # skip_cleanup: true
+  # manifest: manifest.yml
+  # username: $BLUEMIX_USER
+  # password: $BLUEMIX_PASSWORD
+  # organization: $BLUEMIX_ORGANIZATION
+  # space: $BLUEMIX_SPACE
+  provider: script
+  script: bash ./.travis/cf-blue-green.sh
   on:
     branch: haDeployment
 
