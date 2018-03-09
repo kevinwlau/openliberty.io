@@ -25,7 +25,7 @@ deploy:
   # organization: $BLUEMIX_ORGANIZATION
   # space: $BLUEMIX_SPACE
   provider: script
-  script: bash ./.travis/cf-blue-green.sh
+  script: sh ./.travis/cf-blue-green.sh
   on:
     branch: haDeployment
 
