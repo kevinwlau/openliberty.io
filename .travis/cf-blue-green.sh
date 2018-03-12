@@ -24,12 +24,11 @@ on_fail () {
     echo "DEPLOY FAILED - you may need to check 'cf apps' and 'cf routes' and do manual cleanup"
 }
 
+trap on_fail ERR
 
 # pull the up-to-date manifest from the BLUE (existing) application
 MANIFEST=$(mktemp -t "${BLUE}_manifest.XXXXXXXXXX")
 ./cf create-app-manifest $BLUE -p $MANIFEST
-
-trap on_fail ERR
 
 # grab domain from BLUE MANIFEST
 DOMAIN=$(cat $MANIFEST | grep domain: | awk '{print $2}')}
@@ -37,7 +36,7 @@ DOMAIN=$(cat $MANIFEST | grep domain: | awk '{print $2}')}
 # create the GREEN application
 ./cf push $GREEN -f $MANIFEST -n $GREEN
 # ensure it starts
-curl --fail -I "https://${GREEN}.${DOMAIN}"
+curl --fail -s -I "https://${GREEN}.${DOMAIN}"
 
 # add the GREEN application to each BLUE route to be load-balanced
 # TODO this output parsing seems a bit fragile...find a way to use more structured output
