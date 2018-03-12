@@ -1,4 +1,14 @@
 #!/bin/bash
+set -e
+
+echo "============== INSTALLING CLOUD FOUNDRY CLI CLIENT =============="
+# https://github.com/cloudfoundry/cli/releases
+wget --max-redirect=1 --output-document=cf_cli_6.26.0.tgz "https://cli.run.pivotal.io/stable?release=linux64-binary&version=6.26.0&source=github-rel"
+gunzip cf_cli_6.26.0.tgz
+tar -xvf cf_cli_6.26.0.tar
+
+echo "============== LOGGING INTO CLOUD FOUNDRY =============="
+./cf login -a=$BLUEMIX_API -s=$BLUEMIX_SPACE -o=$BLUEMIX_ORGANIZATION -u=$BLUEMIX_USER -p=$BLUEMIX_PASSWORD
 
 echo "Stopping blue"
 cf stop qa-guides-blue
