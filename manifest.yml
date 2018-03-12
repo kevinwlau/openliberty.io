@@ -4,8 +4,6 @@ disk_quota: 1024M
 path: target/openliberty.war
 
 applications:
-- name: sguides
-  domain: mybluemix.net
-  host: sguides
+- domain: mybluemix.net
 env:
   JBP_CONFIG_LIBERTY: 'app_archive: {features: ["microProfile-1.0","webCache-1.0"]}'
