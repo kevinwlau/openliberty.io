@@ -19,13 +19,6 @@ finally ()
     rm $MANIFEST
 }
 
-on_fail () {
-    finally
-    echo "DEPLOY FAILED - you may need to check 'cf apps' and 'cf routes' and do manual cleanup"
-}
-
-trap on_fail ERR
-
 # pull the up-to-date manifest from the BLUE (existing) application
 MANIFEST=$(mktemp -t "${BLUE}_manifest.XXXXXXXXXX")
 ./cf create-app-manifest $BLUE -p $MANIFEST
