@@ -28,7 +28,7 @@ MANIFEST=$(mktemp -t "${BLUE}_manifest.XXXXXXXXXX")
 DOMAIN=$(cat $MANIFEST | grep domain: | awk '{print $2}')}
 
 # create the GREEN application
-./cf push $GREEN -p ./target/openliberty.war -f $MANIFEST -b https://github.com/cloudfoundry/ibm-websphere-liberty-buildpack.git
+./cf push $GREEN -p ./target/openliberty.war -f $MANIFEST
 # ensure it starts
 curl --fail -s -I "https://${GREEN}.${DOMAIN}"
 
