@@ -9,7 +9,7 @@ sudo apt-get update
 sudo apt-get install cf-cli
 
 echo "============== LOGGING INTO CLOUD FOUNDRY =============="
-bx login -a=$BLUEMIX_API -s=$BLUEMIX_SPACE -o=$BLUEMIX_ORGANIZATION -u=$BLUEMIX_USER -p=$BLUEMIX_PASSWORD
+./cf login -a=$BLUEMIX_API -s=$BLUEMIX_SPACE -o=$BLUEMIX_ORGANIZATION -u=$BLUEMIX_USER -p=$BLUEMIX_PASSWORD
 
 BLUE=$1
 GREEN="${BLUE}-B"
