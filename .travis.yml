@@ -13,6 +13,7 @@ script: ./scripts/build_jekyll_maven.sh
 branches:
   only:
     - haDeployment
+    - bluemix
 
 sudo: required # route your build to the container-based infrastructure for a faster build
 
@@ -31,7 +32,9 @@ deploy:
   script: sh ./.travis/cf-blue-green.sh qa-guides-blue
   skip_cleanup: true
   on:
-    branch: haDeployment
+    branch: 
+      - haDeployment
+      - bluemix
 
 env:
   global:
