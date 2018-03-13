@@ -8,6 +8,7 @@ gunzip cf_cli_6.35.0.tgz
 tar -xvf cf_cli_6.35.0.tar
 
 echo "============== LOGGING INTO CLOUD FOUNDRY =============="
+echo `pwd`
 ./cf login -a=$BLUEMIX_API -s=$BLUEMIX_SPACE -o=$BLUEMIX_ORGANIZATION -u=$BLUEMIX_USER -p=$BLUEMIX_PASSWORD
 
 BLUE=$1
