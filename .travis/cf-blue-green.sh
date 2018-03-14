@@ -44,5 +44,4 @@ DOMAIN=$(cat $MANIFEST | grep domain: | awk '{print $2}')}
 echo "Cleaning up after blue-green deployment..."
 ./cf delete $BLUE -f
 ./cf rename $GREEN $BLUE
-./cf delete-route $DOMAIN -n $GREEN -f
 finally
