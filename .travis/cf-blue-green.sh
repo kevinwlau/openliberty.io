@@ -46,5 +46,5 @@ echo "Cleaning up after blue-green deployment..."
 ./cf stop $BLUE
 ./cf rename $BLUE $TEMP
 ./cf rename $GREEN $BLUE
-./cf delete $TEMP -f
+./cf rename $TEMP $GREEN
 finally
