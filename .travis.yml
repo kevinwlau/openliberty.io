@@ -25,7 +25,7 @@ deploy:
   # organization: $BLUEMIX_ORGANIZATION
   # space: $BLUEMIX_SPACE
   provider: script
-  script: ./.travis/cf-blue-green.sh sguides
+  script: ./.travis/cf-blue-green.sh
   skip_cleanup: true
   on:
     branch: haDeployment

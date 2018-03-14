@@ -16,22 +16,22 @@ GREEN="${BLUE}-B"
 TEMP="${BLUE}-old"
 echo "App name is $BLUE"
 
-finally ()
-{
-    # we don't want to keep the sensitive information around
-    rm $MANIFEST
-}
+# finally ()
+# {
+#     # we don't want to keep the sensitive information around
+#     rm $MANIFEST
+# }
 
 # pull the up-to-date manifest from the BLUE (existing) application
-MANIFEST=$(mktemp -t "${BLUE}_manifest.XXXXXXXXXX")
-./cf create-app-manifest $BLUE -p $MANIFEST
+# MANIFEST=$(mktemp -t "${BLUE}_manifest.XXXXXXXXXX")
+# ./cf create-app-manifest $BLUE -p $MANIFEST
 
 # grab domain from BLUE MANIFEST
 # ROUTE=$(cat $MANIFEST | grep route: | awk '{print $3}')}
 # echo "Using route $ROUTE for Green deployment"
 
 # create the GREEN application
-./cf push $GREEN -p ./target/openliberty.war -f $MANIFEST -b liberty-for-java
+./cf push $GREEN -p ./target/openliberty.war -b liberty-for-java
 
 #TODO: push to set route $GREEN.mybluemix.net, 
 #       curl it for the initial slow call
@@ -53,4 +53,4 @@ echo "Cleaning up after blue-green deployment..."
 ./cf rename $BLUE $TEMP
 ./cf rename $GREEN $BLUE
 ./cf rename $TEMP $GREEN
-finally
+# finally
