@@ -42,7 +42,7 @@ DOMAIN=$(cat $MANIFEST | grep domain: | awk '{print $2}')}
 # cleanup
 # TODO consider 'stop'-ing the BLUE instead of deleting it, so that depedencies are cached for next time
 echo "Cleaning up after blue-green deployment..."
-./cf stop $BLUE
+./cf delete $BLUE -f
 ./cf rename $GREEN $BLUE
 ./cf delete-route $DOMAIN -n $GREEN -f
 finally
