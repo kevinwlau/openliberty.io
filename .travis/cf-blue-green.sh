@@ -11,7 +11,7 @@ echo "============== LOGGING INTO CLOUD FOUNDRY =============="
 echo `pwd`
 ./cf login -a=$BLUEMIX_API -s=$BLUEMIX_SPACE -o=$BLUEMIX_ORGANIZATION -u=$BLUEMIX_USER -p=$BLUEMIX_PASSWORD
 
-BLUE=$1
+BLUE=`cat manifest.yml|grep route:|awk '{print $3}'|sed -e 's,\..*,,'`
 GREEN="${BLUE}-B"
 TEMP="${BLUE}-old"
 
@@ -26,10 +26,14 @@ MANIFEST=$(mktemp -t "${BLUE}_manifest.XXXXXXXXXX")
 ./cf create-app-manifest $BLUE -p $MANIFEST
 
 # grab domain from BLUE MANIFEST
-DOMAIN=$(cat $MANIFEST | grep domain: | awk '{print $2}')}
+ROUTE=$(cat $MANIFEST | grep route: | awk '{print $3}' | sed -e "s,${BLUE}.,,")}
 
 # create the GREEN application
-./cf push $GREEN -p ./target/openliberty.war -f $MANIFEST -b liberty-for-java
+./cf push $GREEN -p ./target/openliberty.war -f $MANIFEST -b liberty-for-java --route-path ${ROUTE}
+
+#TODO: push to set route $GREEN.mybluemix.net, 
+#       curl it for the initial slow call
+#       add route
 
 # ensure it starts
 # echo "Checking status of new instance..."
