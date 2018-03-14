@@ -14,6 +14,7 @@ echo `pwd`
 BLUE=`cat manifest.yml|grep route:|awk '{print $3}'|sed -e 's,\..*,,'`
 GREEN="${BLUE}-B"
 TEMP="${BLUE}-old"
+echo "App name is $BLUE"
 
 finally ()
 {
@@ -26,10 +27,11 @@ MANIFEST=$(mktemp -t "${BLUE}_manifest.XXXXXXXXXX")
 ./cf create-app-manifest $BLUE -p $MANIFEST
 
 # grab domain from BLUE MANIFEST
-ROUTE=$(cat $MANIFEST | grep route: | awk '{print $3}' | sed -e "s,${BLUE}.,,")}
+# ROUTE=$(cat $MANIFEST | grep route: | awk '{print $3}')}
+# echo "Using route $ROUTE for Green deployment"
 
 # create the GREEN application
-./cf push $GREEN -p ./target/openliberty.war -f $MANIFEST -b liberty-for-java --route-path ${ROUTE}
+./cf push $GREEN -p ./target/openliberty.war -f $MANIFEST -b liberty-for-java
 
 #TODO: push to set route $GREEN.mybluemix.net, 
 #       curl it for the initial slow call
