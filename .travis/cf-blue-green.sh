@@ -33,18 +33,14 @@ echo "App name is $BLUE"
 # create the GREEN application
 ./cf push $GREEN -p ./target/openliberty.war -b liberty-for-java
 
-#TODO: push to set route $GREEN.mybluemix.net, 
-#       curl it for the initial slow call
-#       add route
-
 # ensure it starts
-# echo "Checking status of new instance..."
-# curl --fail -s -I "https://${GREEN}.${DOMAIN}"
+echo "Checking status of new instance..."
+curl --fail -s -I "https://${GREEN}.mybluemix.net"
 
 # add the GREEN application to each BLUE route to be load-balanced
 # TODO this output parsing seems a bit fragile...find a way to use more structured output
 # echo "Rerouting main site..."
-# ./cf routes | tail -n +4 | grep $BLUE | awk '{print $3" -n "$2}' | xargs -n 3 ./cf map-route $GREEN
+./cf routes | tail -n +4 | grep $BLUE | awk '{print $3" -n "$2}' | xargs -n 3 ./cf map-route $GREEN
 
 # cleanup
 # TODO consider 'stop'-ing the BLUE instead of deleting it, so that depedencies are cached for next time
