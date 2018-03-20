@@ -45,8 +45,12 @@ echo "Adding main route ($BLUE.$ROUTE) to new app ($GREEN)..."
 # cleanup
 echo "Cleaning up after blue-green deployment..."
 ./cf stop $BLUE
-./cf delete-route $DOMAIN -n $GREEN -f # delete b-route
-./cf map-route $BLUE $DOMAIN --hostname $GREEN # reuse old BLUE as new GREEN for next deployment
+./cf unmap-route $GREEN $DOMAIN --hostname $GREEN # remove B route from new deploy
+
+# setup old BLUE deploy to be ready to be GREEN for next deployment
+./cf map-route $BLUE $DOMAIN --hostname $GREEN # add B route from old deploy
+./cf unmap-route $BLUE $DOMAIN --hostname $BLUE # remove main route from old deploy
+# swap app names
 ./cf rename $BLUE $TEMP
 ./cf rename $GREEN $BLUE
 ./cf rename $TEMP $GREEN
