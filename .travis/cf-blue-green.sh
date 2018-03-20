@@ -22,13 +22,6 @@ GREEN="${BLUE}-B"
 TEMP="${BLUE}-old"
 
 DOMAIN=`echo $ROUTE | sed -e "s,$BLUE\.,,"`
-B_ROUTE="${GREEN}.${DOMAIN}"
-
-# finally ()
-# {
-#     # we don't want to keep the sensitive information around
-#     rm $MANIFEST
-# }
 
 # create the GREEN application
 ./cf push $GREEN -p ./target/openliberty.war -b liberty-for-java
@@ -38,7 +31,6 @@ echo "Checking status of new instance https://${GREEN}.${DOMAIN}..."
 curl --fail -s -I "https://${GREEN}.${DOMAIN}" --connect-timeout 180 --max-time 300
 
 # add the GREEN application to each BLUE route to be load-balanced
-# TODO this output parsing seems a bit fragile...find a way to use more structured output
 echo "Adding main route ($BLUE.$ROUTE) to new app ($GREEN)..."
 ./cf map-route $GREEN $DOMAIN --hostname $BLUE
 
@@ -50,8 +42,9 @@ echo "Cleaning up after blue-green deployment..."
 # setup old BLUE deploy to be ready to be GREEN for next deployment
 ./cf map-route $BLUE $DOMAIN --hostname $GREEN # add B route from old deploy
 ./cf unmap-route $BLUE $DOMAIN --hostname $BLUE # remove main route from old deploy
+# this unmap may not be necessary, but keeps bluemix dashboard cleaner
+
 # swap app names
 ./cf rename $BLUE $TEMP
 ./cf rename $GREEN $BLUE
 ./cf rename $TEMP $GREEN
-# finally
