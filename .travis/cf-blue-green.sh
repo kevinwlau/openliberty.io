@@ -8,9 +8,9 @@ gunzip cf_cli_6.35.0.tgz
 tar -xvf cf_cli_6.35.0.tar
 
 echo "============== LOGGING INTO CLOUD FOUNDRY =============="
-echo `pwd`
 ./cf login -a=$BLUEMIX_API -s=$BLUEMIX_SPACE -o=$BLUEMIX_ORGANIZATION -u=$BLUEMIX_USER -p=$BLUEMIX_PASSWORD
 
+# ==== VARIABLE SETUP ====
 MANIFEST="manifest.yml"
 # get route, app name (BLUE), and domain
 ROUTE=`cat $MANIFEST | grep route: | awk '{print $3}'`
@@ -23,12 +23,13 @@ TEMP="${BLUE}-old"
 
 DOMAIN=`echo $ROUTE | sed -e "s,$BLUE\.,,"`
 
+# ==== DEPLOYMENT ====
 # create the GREEN application
 ./cf push $GREEN -p ./target/openliberty.war -b liberty-for-java
 
 # ensure it starts
 echo "Checking status of new instance https://${GREEN}.${DOMAIN}..."
-curl --fail -s -I "https://${GREEN}.${DOMAIN}" --connect-timeout 180 --max-time 300
+curl --fail -s -I "https://${GREEN}.${DOMAIN}" --connect-timeout 240 --max-time 300
 
 # add the GREEN application to each BLUE route to be load-balanced
 echo "Adding main route ($BLUE.$ROUTE) to new app ($GREEN)..."
