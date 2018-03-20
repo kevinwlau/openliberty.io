@@ -34,8 +34,8 @@ echo "App name is $BLUE"
 ./cf push $GREEN -p ./target/openliberty.war -b liberty-for-java
 
 # ensure it starts
-echo "Checking status of new instance..."
-curl --fail -s -I "https://${GREEN}.mybluemix.net"
+echo "Checking status of new instance https://${GREEN}.mybluemix.net..."
+curl --fail -s -I "https://${GREEN}.mybluemix.net" --connect-timeout 120 --max-time 180
 
 # add the GREEN application to each BLUE route to be load-balanced
 # TODO this output parsing seems a bit fragile...find a way to use more structured output
