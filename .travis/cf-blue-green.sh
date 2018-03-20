@@ -35,7 +35,7 @@ B_ROUTE="${GREEN}.${DOMAIN}"
 
 # ensure it starts
 echo "Checking status of new instance https://${GREEN}.${DOMAIN}..."
-curl --fail -s -I "https://${GREEN}.${DOMAIN}" --connect-timeout 120 --max-time 180
+curl --fail -s -I "https://${GREEN}.${DOMAIN}" --connect-timeout 180 --max-time 300
 
 # add the GREEN application to each BLUE route to be load-balanced
 # TODO this output parsing seems a bit fragile...find a way to use more structured output
@@ -46,7 +46,7 @@ echo "Adding main route ($BLUE.$ROUTE) to new app ($GREEN)..."
 echo "Cleaning up after blue-green deployment..."
 ./cf stop $BLUE
 ./cf delete-route $DOMAIN -n $GREEN -f # delete b-route
-./cf map-route $BLUE $B_ROUTE
+./cf map-route $BLUE $DOMAIN --hostname $GREEN # reuse old BLUE as new GREEN for next deployment
 ./cf rename $BLUE $TEMP
 ./cf rename $GREEN $BLUE
 ./cf rename $TEMP $GREEN
