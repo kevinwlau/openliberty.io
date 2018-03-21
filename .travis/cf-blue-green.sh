@@ -22,7 +22,7 @@ DOMAIN=`echo $ROUTE | sed -e "s,$BLUE\.,,"`
 
 # ==== DEPLOYMENT ====
 # create the GREEN application
-./cf push $GREEN -p ./target/openliberty.war -b liberty-for-java --route-path ${ROUTE}
+./cf push $GREEN -b liberty-for-java -f ./.travis/travis_manifest.yml
 
 # ensure it starts
 echo "Checking status of new instance https://${GREEN}.${DOMAIN}..."
