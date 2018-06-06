@@ -1,0 +1,110 @@
+---
+layout: doc
+css: 
+- doc-header
+- table-of-contents
+- guide-card
+- guide-multipane
+js: guide-multipane
+---
+
+<div id="background_container" class="black_blue_gradient_background">
+        <div class="row">
+            <!-- Guide's table of contents section -->
+            <div id="toc_column" class="collapse inline">
+                <div id="toc_inner">
+                    {% assign toc = page.document | tocify_asciidoc %}
+                    {% if toc %}
+                    <div id="close_container">
+                        <img src="{{ " /img/TOC_Close.svg " | relative }}" alt="Table of contents close button"/>
+                    </div>
+                    <h3 id="toc_title">Contents</h3>
+                    <div id="toc_container">
+                        {{ toc }}
+                    </div>
+                    <div id="toc_separator"></div>
+                    {% endif %}
+                    {% if page.tags %}
+                        <h3 id="tag_title">Tags</h3>
+                        <div id="tags_container">
+                            {% for tag in page.tags %}
+                                <a href="/guides?search={{ tag }}&key=tag">{{ tag }}</a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- Entire guide section -->
+            <div id="guide_column" class="position_relative">
+                <div id="guide_content">
+                    <!-- Guide header section -->
+                    <div id="guide_meta" class="sect1">
+                        <h1 id="guide_title">{{ page.title }}</h1>
+                        <div id="duration_container">
+                            <img src="/img/guide_duration_clock_icon_large.svg" alt="duration">
+                            <span id="guide_duration">{{ page.duration }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Guide content section -->
+                    {{ content }}
+
+                    <div id="down_arrow">
+                        <img src="/img/guide_down_arrow.svg" alt="scroll_down">
+                    </div>
+
+                    <!-- Related guides section -->
+                    {% if page.related-guides %}
+                    <div id="related-guides" class="sect1">
+                        <h2>Related guides</h2>
+                        <div id="related-guides-cards" class="row">
+                        {% for related-guide in page.related-guides %}
+                            {% assign url = '/guides/' | append: related-guide %}
+                            {% assign list = site.pages | where: 'permalink', url %}
+                            {% unless list == empty %}
+								<!-- Only create a card if we find the permalink -->
+                                {% assign related-guide-metadata = list[0] %}
+                                <div class="col-sm-12 col-lg-6">
+                                    <a href="/guides/{{related-guide}}.html" class="guide_item">
+                                        <div class="guide_title_and_description_container">
+                                            <h3 class="guide_title">{{related-guide-metadata.title}}</h3>
+                                            <p class="guide_description">{{related-guide-metadata.description}}</p>
+                                        </div>
+                                        <img class="duration_clock_icon" src="/img/guide_duration_clock_icon_small.svg" alt="Duration">
+                                        <span class="guide_duration">{{related-guide-metadata.duration}}</span>
+                                        {% if related-guide-metadata.layout == 'interactive-guide' %}
+                                        <img class="interactive_bolt_icon" src="/img/guide_lightning_bolt.svg" alt="Interactive">
+                                        <span class="guide_interactive">Interactive</span>
+                                        {% endif %}
+                                    </a>
+                                </div>
+                            {% endunless %}
+                        {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div id="copied_to_clipboard_confirmation" style="display: none;">Copied to clipboard</div>
+                <a id="copy_to_clipboard" href="" style="display: none;"></a>
+            </div>
+
+            <!-- Code section -->
+            <div id="code_column" class="position_relative">
+                <div id="github_clone_popup_container" style="display: none">
+                    <div id="github_clone_popup">
+                        <div id="github_clone_popup_title">Git clone this repo to get going right away:</div>
+                        <div id="github_clone_popup_repo">
+                                git clone https://github.com/OpenLiberty/guide-{{page.url | replace: '/guides/', ''}}.git
+                        </div>
+                        <div id="github_clone_popup_copy">
+                            <img src="/img/guide_copy_button_black.svg" alt="Copy github clone command">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+</div>
+
+<div id="related_guides_section">
+    <h2>Nice work! You did it!</h2>
+</div>

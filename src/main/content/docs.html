@@ -1,0 +1,74 @@
+---
+layout: doc
+type: Docs
+css:
+- reference-card
+- doc-header
+- docs
+permalink: /docs/
+---
+
+<!-- INTRO -->
+<div id="docs_intro_background" class="black_blue_gradient_background">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <img id="docs_title" src="{{ "/img/docs_page_title.svg" | relative }}" class="img-responsive" alt="Docs">
+            </div>
+            <div class="col-sm-8">
+                <p id="contribute_intro_paragraph_1">
+                    Sometimes even the best navigators need to be pointed in the right direction.  These docs are designed to make your development journey that much easier; whether you’re in need of a little help or just want to explore.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="all_guides_container" class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div id="all_guides_title">Open Liberty Guides</div>
+            <p id="all_guides_description">Our guides are the best way to learn and explore Open Liberty. All guides keep the code at the forefront,
+                so you can get what you need and get back to work.</p>
+            <a href="/guides" id="all_guides_link">View all Open Liberty guides</a>
+        </div>
+        <div class="col-md-6">
+            <div id="code_block"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Build one list of all the documents that have a particular layout -->
+{% assign javadocs = site.pages | where: 'type', 'Javadoc' %}
+
+<div class="grey_background">
+    <div id="docs_container" class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-4">
+                <div id="reference_title">API Reference</div>
+                <p id="reference_description">View the Javadoc for APIs available in Open Liberty. More reference material is in the works.</p>
+            </div>
+            {% for doc in javadocs %}
+                {% if doc.url == '/docs/ref/javaee/7/' or doc.url == '/docs/ref/microprofile/1%2E3/' %}
+                    <div class="col-sm-12 col-sm-6 col-md-4">
+                        <a href="{{ doc.url | replace: '%2E', '.'}}" class="reference_item">
+                            {% if doc.url == '/docs/ref/javaee/7/' %}
+                            <img id="javaee_logo" src="{{ "/img/docs_java_ee_logo.png" | relative }}" class="img-responsive" alt="Java EE Logo">
+                            {% endif %}
+                            {% if doc.url == '/docs/ref/microprofile/1%2E3/' %}
+                            <img id="mp_logo" src="{{ "/img/logos/docs_microprofile_logo.png" | relative }}" class="img-responsive" alt="MicroProfile Logo">
+                            {% endif %}
+                            <h3 class="reference_title">{{doc.title}}</h3>
+                        </a>
+                    </div>
+                {% endif %}            
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- PRE-LOADED IMAGES -->
+<div class="hidden">
+    <!-- This picture is much too large to pre-load... -->
+    <!-- <img src="/img/docs_codeText.png"> -->
+</div>
