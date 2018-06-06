@@ -4,14 +4,11 @@ disk_quota: 1024M
 path: target/openliberty.war
 
 applications:
-- name: openliberty-blue
-  domain: openliberty.io
+- name: openlibertytest-blue
+  domain: ng.bluemix.net
   host: www
-- name: openliberty-green
-  domain: openliberty.io
+- name: openlibertytest-green
+  domain: ng.bluemix.net
   host: www
-- name: openlibertydev
-  domain: mybluemix.net
-  host: openlibertydev
 env:
   JBP_CONFIG_LIBERTY: 'app_archive: {features: ["microProfile-1.0","webCache-1.0"]}'
